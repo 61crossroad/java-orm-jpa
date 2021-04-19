@@ -1,0 +1,33 @@
+plugins {
+    id 'application'
+}
+
+apply plugin: 'java'
+
+ext {
+    javaMainClass = 'org.jetlag.JpaMain'
+}
+
+application {
+    getMainClass().set(javaMainClass)
+}
+
+group 'org.jetlag'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.hibernate:hibernate-entitymanager:5.4.30.Final'
+    implementation 'com.h2database:h2:1.4.200'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
