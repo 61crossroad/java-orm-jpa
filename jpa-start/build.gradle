@@ -4,12 +4,8 @@ plugins {
 
 apply plugin: 'java'
 
-ext {
-    javaMainClass = 'org.jetlag.JpaMain'
-}
-
 application {
-    getMainClass().set(javaMainClass)
+    getMainClass().set('org.jetlag.JpaMain')
 }
 
 group 'org.jetlag'
