@@ -1,0 +1,47 @@
+# Mac & etc
+.DS_Store
+*.zip
+Help.md
+
+# IntelliJ
+.idea/
+.idea_modules/
+*.iml
+
+# VS Code
+.vscode/
+
+# Eclipse
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Build
+out/
+bin/
+target/
+build/
+**/build/
+*.class
+*.jar
+*.war
+
+# Gradle
+.gradle/
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
