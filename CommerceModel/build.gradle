@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.jetlag'
 version '1.0-SNAPSHOT'
+
+application {
+    getMainClass().set('org.jetlag.CommerceModel')
+}
 
 repositories {
     mavenCentral()

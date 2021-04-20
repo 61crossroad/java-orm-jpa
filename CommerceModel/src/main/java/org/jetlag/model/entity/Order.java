@@ -21,6 +21,6 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
-    @Enumarated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }
