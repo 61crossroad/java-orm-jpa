@@ -14,7 +14,8 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            updateRelation(em);
+            deleteRelation(em);
+            // updateRelation(em);
             //queryLogicJoin(em);
             // testSave(em);
             tx.commit();
@@ -25,6 +26,11 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void deleteRelation(EntityManager em) {
+        Member member1 = em.find(Member.class, "member1");
+        member1.setTeam(null);
     }
 
     public static void updateRelation(EntityManager em) {
