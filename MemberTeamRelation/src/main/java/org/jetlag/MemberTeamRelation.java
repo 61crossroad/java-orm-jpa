@@ -14,7 +14,9 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            queryLogicJoin(em);
+            updateRelation(em);
+            //queryLogicJoin(em);
+            // testSave(em);
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,14 +27,21 @@ public class MemberTeamRelation {
         emf.close();
     }
 
+    public static void updateRelation(EntityManager em) {
+        Team team2 = new Team("team2", "팀2");
+        em.persist(team2);
+
+        Member member = em.find(Member.class, "member1");
+        member.setTeam(team2);
+    }
+
     public static void queryLogicJoin(EntityManager em) {
         String jpql = "select m from Member m join m.team t where t.name = :teamName";
 
-        List<Member> resultList = em.createQuery(jpql, Member.class)
+        em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "팀1")
-                .getResultList();
-
-        resultList.forEach(member -> System.out.println("[query] member.username = " + member.getUsername()));
+                .getResultList().stream()
+                .forEach(member -> System.out.println("[query] member.username = " + member.getUsername()));
     }
 
     public static void testSave(EntityManager em) {
