@@ -14,10 +14,13 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            deleteRelation(em);
-            // updateRelation(em);
-            //queryLogicJoin(em);
-            // testSave(em);
+            testORM_biDirection_refactor(em);
+//            testORM_biDirection(em);
+//            biDirection(em);
+//            deleteRelation(em);
+//            updateRelation(em);
+//            queryLogicJoin(em);
+//            testSave(em);
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,6 +29,39 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void testORM_biDirection_refactor(EntityManager em) {
+        Team team1 = new Team("team1", "팀1");
+        em.persist(team1);
+
+        Member member1 = new Member("member1", "회원1");
+        member1.setTeam(team1);
+        em.persist(member1);
+
+        Member member2 = new Member("member2", "회원2");
+        member2.setTeam(team1);
+        em.persist(member2);
+    }
+
+    public static void testORM_biDirection(EntityManager em) {
+        Team team1 = new Team("team1", "팀1");
+        em.persist(team1);
+
+        Member member1 = new Member("member1", "회원1");
+        member1.setTeam(team1);
+        team1.getMembers().add(member1);
+        em.persist(member1);
+
+        Member member2 = new Member("member2", "회원2");
+        member2.setTeam(team1);
+        team1.getMembers().add(member2);
+        em.persist(member2);
+    }
+
+    public static void biDirection(EntityManager em) {
+        Team team = em.find(Team.class, "team1");
+        team.getMembers().stream().forEach(member -> System.out.println("member.username = " + member.getUsername()));
     }
 
     public static void deleteRelation(EntityManager em) {
@@ -46,7 +82,7 @@ public class MemberTeamRelation {
 
         em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "팀1")
-                .getResultList().stream()
+                .getResultList()
                 .forEach(member -> System.out.println("[query] member.username = " + member.getUsername()));
     }
 

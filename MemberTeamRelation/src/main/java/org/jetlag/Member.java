@@ -1,12 +1,13 @@
 package org.jetlag;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@ToString(exclude = "team")
 @NoArgsConstructor
 @Setter
 @Getter
@@ -28,6 +29,10 @@ public class Member {
     }
 
     public void setTeam(Team team) {
+        if (this.team != null) {
+            this.team.getMembers().remove(this);
+        }
         this.team = team;
+        team.getMembers().add(this);
     }
 }
