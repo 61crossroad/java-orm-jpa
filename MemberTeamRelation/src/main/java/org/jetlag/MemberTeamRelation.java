@@ -14,7 +14,9 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            testORM_biDirection_refactor(em);
+            saveDirectedNToN(em);
+            findDirectedNToN(em);
+//            testORM_biDirection_refactor(em);
 //            testORM_biDirection(em);
 //            biDirection(em);
 //            deleteRelation(em);
@@ -29,6 +31,24 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void saveDirectedNToN(EntityManager em) {
+        DirectedNToNProduct productA = new DirectedNToNProduct();
+        productA.setId("productA");
+        productA.setName("상품A");
+        em.persist(productA);
+
+        DirectedNToNMember member1 = new DirectedNToNMember();
+        member1.setId("member1");
+        member1.setUsername("회원1");
+        member1.getDirectedNToNProducts().add(productA);
+        em.persist(member1);
+    }
+
+    public static void findDirectedNToN(EntityManager em) {
+        DirectedNToNMember member = em.find(DirectedNToNMember.class, "member1");
+        member.getDirectedNToNProducts().forEach(product -> System.out.println("product.name = " + product.getName()));
     }
 
     public static void testORM_biDirection_refactor(EntityManager em) {
