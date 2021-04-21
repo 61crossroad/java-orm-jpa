@@ -13,6 +13,8 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
+            saveEntity(em);
+            findEntity(em);
 //            findInverse(em);
 //            saveDirectedNToN(em);
 //            findDirectedNToN(em);
@@ -31,6 +33,40 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void saveEntity(EntityManager em) {
+        NToNEntityMember member1 = new NToNEntityMember();
+        member1.setId("member1");
+        member1.setUsername("회원1");
+        em.persist(member1);
+
+        NToNEntityProduct productA = new NToNEntityProduct();
+        productA.setId("productA");
+        productA.setName("상품1");
+        em.persist(productA);
+
+        MemberProductEntity memberProductEntity = new MemberProductEntity();
+        memberProductEntity.setNToNEntityMember(member1);
+        memberProductEntity.setNToNEntityProduct(productA);
+        memberProductEntity.setOrderAmount(2);
+
+        em.persist(memberProductEntity);
+    }
+
+    public static void findEntity(EntityManager em) {
+        MemberProductEntityId memberProductEntityId = new MemberProductEntityId();
+        memberProductEntityId.setNToNEntityMember("member1");
+        memberProductEntityId.setNToNEntityProduct("productA");
+
+        MemberProductEntity memberProductEntity = em.find(MemberProductEntity.class, memberProductEntityId);
+
+        NToNEntityMember member = memberProductEntity.getNToNEntityMember();
+        NToNEntityProduct product = memberProductEntity.getNToNEntityProduct();
+
+        System.out.println("member = " + member.getUsername());
+        System.out.println("product = " + product.getName());
+        System.out.println("orderAmount = " + memberProductEntity.getOrderAmount());
     }
 
     public static void findInverse(EntityManager em) {
