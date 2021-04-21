@@ -4,7 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class BidirectedOneToOneDominantMember {
-    @Id @GeneratedValue @Column(name = "MEMBER_ID")
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
     private String username;

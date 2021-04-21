@@ -9,6 +9,6 @@ public class BidirectedOneToOneDominantLocker {
 
     private String name;
 
-    @OneToOne(mappedBy = "locker")
+    @OneToOne(mappedBy = "bidirectedOneToOneDominantLocker")
     private BidirectedOneToOneDominantMember bidirectedOneToOneDominantMember;
 }
