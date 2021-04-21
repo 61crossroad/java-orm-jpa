@@ -19,9 +19,9 @@ public class NToNEntityMember {
 
     private String username;
 
-    // For mapping entity table with composite primary key
-//    @OneToMany(mappedBy = "nToNEntityMember")
-//    private List<MemberProductEntity> memberProductEntities;
+     // For mapping entity table with composite primary key
+     // @OneToMany(mappedBy = "nToNEntityMember")
+     // private List<MemberProductEntity> memberProductEntities;
 
     @OneToMany(mappedBy = "nToNEntityMember")
     private List<Orders> orders = new ArrayList<>();
