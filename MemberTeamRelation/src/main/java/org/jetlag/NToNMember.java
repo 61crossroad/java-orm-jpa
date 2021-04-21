@@ -20,11 +20,11 @@ public class NToNMember {
     @JoinTable(name = "MEMBER_PRODUCT",
             joinColumns = @JoinColumn(name = "MEMBER_ID"),
             inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
-    private List<NToNProduct> NToNProducts = new ArrayList<>();
+    private List<NToNProduct> nToNProducts = new ArrayList<>();
 
     // Bidirected N:N
-    public void addProduct(NToNProduct NToNProduct) {
-        NToNProducts.add(NToNProduct);
-        NToNProduct.getNToNMembers().add(this);
+    public void addProduct(NToNProduct nToNProduct) {
+        this.nToNProducts.add(nToNProduct);
+        nToNProduct.getNToNMembers().add(this);
     }
 }

@@ -20,5 +20,5 @@ public class NToNProduct {
 
     // Bidirected N:N
     @ManyToMany(mappedBy = "NToNProducts")
-    private List<NToNMember> NToNMembers;
+    private List<NToNMember> nToNMembers;
 }
