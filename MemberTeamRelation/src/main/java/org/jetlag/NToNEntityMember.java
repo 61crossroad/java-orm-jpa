@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -18,7 +19,10 @@ public class NToNEntityMember {
 
     private String username;
 
-    @OneToMany(mappedBy = "nToNEntityMember")
-    private List<MemberProductEntity> memberProductEntities;
+    // For mapping entity table with composite primary key
+//    @OneToMany(mappedBy = "nToNEntityMember")
+//    private List<MemberProductEntity> memberProductEntities;
 
+    @OneToMany(mappedBy = "nToNEntityMember")
+    private List<Orders> orders = new ArrayList<>();
 }

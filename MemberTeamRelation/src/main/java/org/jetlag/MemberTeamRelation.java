@@ -13,8 +13,10 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            saveEntity(em);
-            findEntity(em);
+            saveOrder(em);
+            findOrder(em);
+//            saveEntity(em);
+//            findEntity(em);
 //            findInverse(em);
 //            saveDirectedNToN(em);
 //            findDirectedNToN(em);
@@ -33,6 +35,36 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void saveOrder(EntityManager em) {
+        NToNEntityMember member1 = new NToNEntityMember();
+        member1.setId("member1");
+        member1.setUsername("회원1");
+        em.persist(member1);
+
+        NToNEntityProduct productA = new NToNEntityProduct();
+        productA.setId("productA");
+        productA.setName("상품A");
+        em.persist(productA);
+
+        Orders order = new Orders();
+        order.setNToNEntityMember(member1);
+        order.setNToNEntityProduct(productA);
+        order.setOrderAmount(2);
+        em.persist(order);
+    }
+
+    public static void findOrder(EntityManager em) {
+        Long orderId = 1L;
+        Orders order = em.find(Orders.class, orderId);
+
+        NToNEntityMember member = order.getNToNEntityMember();
+        NToNEntityProduct product = order.getNToNEntityProduct();
+
+        System.out.println("member = " + member.getUsername());
+        System.out.println("product = " + product.getName());
+        System.out.println("orderAmount = " + order.getOrderAmount());
     }
 
     public static void saveEntity(EntityManager em) {
