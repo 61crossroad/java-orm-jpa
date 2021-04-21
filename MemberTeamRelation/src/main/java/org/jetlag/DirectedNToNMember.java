@@ -21,4 +21,10 @@ public class DirectedNToNMember {
             joinColumns = @JoinColumn(name = "MEMBER_ID"),
             inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
     private List<DirectedNToNProduct> directedNToNProducts = new ArrayList<>();
+
+    // Bidirected N:N
+    public void addProduct(DirectedNToNProduct directedNToNProduct) {
+        directedNToNProducts.add(directedNToNProduct);
+        directedNToNProduct.getDirectedNToNMembers().add(this);
+    }
 }

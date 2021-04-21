@@ -14,8 +14,9 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            saveDirectedNToN(em);
-            findDirectedNToN(em);
+            findInverse(em);
+//            saveDirectedNToN(em);
+//            findDirectedNToN(em);
 //            testORM_biDirection_refactor(em);
 //            testORM_biDirection(em);
 //            biDirection(em);
@@ -31,6 +32,11 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void findInverse(EntityManager em) {
+        DirectedNToNProduct product = em.find(DirectedNToNProduct.class, "productA");
+        product.getDirectedNToNMembers().forEach(member -> System.out.println("member = " + member.getUsername()));
     }
 
     public static void saveDirectedNToN(EntityManager em) {
