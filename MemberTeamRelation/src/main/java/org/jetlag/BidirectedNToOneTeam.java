@@ -14,7 +14,7 @@ public class BidirectedNToOneTeam {
 
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "bidirectedNToOneTeam")
     private List<BidirectedNToOneMember> bidirectedNToOneMembers = new ArrayList<>();
 
     public void addBidirectedNToOneMember(BidirectedNToOneMember bidirectedNToOneMember) {

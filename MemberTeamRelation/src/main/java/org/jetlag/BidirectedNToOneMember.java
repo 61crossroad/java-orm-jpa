@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Getter
 @Entity
 public class BidirectedNToOneMember {
-    @Id @GeneratedValue @Column(name = "MEMBER_ID")
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
 
     private String username;
