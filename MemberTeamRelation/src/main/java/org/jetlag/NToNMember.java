@@ -10,21 +10,21 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class DirectedNToNMember {
+public class NToNMember {
     @Id @Column(name = "MEMBER_ID")
     private String id;
 
     private String username;
 
     @ManyToMany
-    @JoinTable(name = "MEMBER_PRODUCT_DIRECTED",
+    @JoinTable(name = "MEMBER_PRODUCT",
             joinColumns = @JoinColumn(name = "MEMBER_ID"),
             inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
-    private List<DirectedNToNProduct> directedNToNProducts = new ArrayList<>();
+    private List<NToNProduct> NToNProducts = new ArrayList<>();
 
     // Bidirected N:N
-    public void addProduct(DirectedNToNProduct directedNToNProduct) {
-        directedNToNProducts.add(directedNToNProduct);
-        directedNToNProduct.getDirectedNToNMembers().add(this);
+    public void addProduct(NToNProduct NToNProduct) {
+        NToNProducts.add(NToNProduct);
+        NToNProduct.getNToNMembers().add(this);
     }
 }

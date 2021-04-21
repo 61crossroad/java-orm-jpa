@@ -12,13 +12,13 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class DirectedNToNProduct {
+public class NToNProduct {
     @Id @Column(name = "PRODUCT_ID")
     private String id;
 
     private String name;
 
     // Bidirected N:N
-    @ManyToMany(mappedBy = "directedNToNProducts")
-    private List<DirectedNToNMember> directedNToNMembers;
+    @ManyToMany(mappedBy = "NToNProducts")
+    private List<NToNMember> NToNMembers;
 }

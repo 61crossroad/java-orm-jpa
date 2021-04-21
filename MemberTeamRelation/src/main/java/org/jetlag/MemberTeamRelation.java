@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class MemberTeamRelation {
     public static void main(String[] args) {
@@ -14,7 +13,7 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            findInverse(em);
+//            findInverse(em);
 //            saveDirectedNToN(em);
 //            findDirectedNToN(em);
 //            testORM_biDirection_refactor(em);
@@ -35,26 +34,26 @@ public class MemberTeamRelation {
     }
 
     public static void findInverse(EntityManager em) {
-        DirectedNToNProduct product = em.find(DirectedNToNProduct.class, "productA");
-        product.getDirectedNToNMembers().forEach(member -> System.out.println("member = " + member.getUsername()));
+        NToNProduct product = em.find(NToNProduct.class, "productA");
+        product.getNToNMembers().forEach(member -> System.out.println("member = " + member.getUsername()));
     }
 
     public static void saveDirectedNToN(EntityManager em) {
-        DirectedNToNProduct productA = new DirectedNToNProduct();
+        NToNProduct productA = new NToNProduct();
         productA.setId("productA");
         productA.setName("상품A");
         em.persist(productA);
 
-        DirectedNToNMember member1 = new DirectedNToNMember();
+        NToNMember member1 = new NToNMember();
         member1.setId("member1");
         member1.setUsername("회원1");
-        member1.getDirectedNToNProducts().add(productA);
+        member1.getNToNProducts().add(productA);
         em.persist(member1);
     }
 
     public static void findDirectedNToN(EntityManager em) {
-        DirectedNToNMember member = em.find(DirectedNToNMember.class, "member1");
-        member.getDirectedNToNProducts().forEach(product -> System.out.println("product.name = " + product.getName()));
+        NToNMember member = em.find(NToNMember.class, "member1");
+        member.getNToNProducts().forEach(product -> System.out.println("product.name = " + product.getName()));
     }
 
     public static void testORM_biDirection_refactor(EntityManager em) {
