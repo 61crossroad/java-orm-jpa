@@ -21,6 +21,11 @@ public class JpqlCriteriaQuerydslNativeSql {
 
     }
 
+    public static void createQueryNativeSql() {
+        String sql = "SELECT id, age, team_id, name FROM member WHERE name = 'kim'";
+        List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
+    }
+
     public static void createQueryQuerydsl() {
         JPAQuery<Member> query = new JPAQuery(em);
         QMember member = QMember.member;
