@@ -14,6 +14,21 @@ public class ProxyEagerLazy {
 
     }
 
+    public static void saveNoCascade() {
+        Parent parent = new Parent();
+        em.persist(parent);
+
+        Child child1 = new Child();
+        child1.setParent(parent);
+        parent.getChildren().add(child1);
+        em.persist(child1);
+
+        Child child2 = new Child();
+        child2.setParent(parent);
+        parent.getChildren().add(child2);
+        em.persist(child2);
+    }
+
     public static void printUserAndTeam(String memberId) {
         Member member = em.find(Member.class, memberId);
         Team team = member.getTeam();
