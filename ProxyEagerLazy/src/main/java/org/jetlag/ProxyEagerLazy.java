@@ -14,6 +14,17 @@ public class ProxyEagerLazy {
 
     }
 
+    // CascadeType.ALL + orphanRemoval = true
+    public static void cascadePersistAndRemove() {
+        Child child1 = new Child();
+        Parent parentPersist = em.find(Parent.class, 1L);
+        parentPersist.getChildren().add(child1);
+
+        Child child2 = new Child();
+        Parent parentRemove = em.find(Parent.class, 2L);
+        parentRemove.getChildren().remove(child2);
+    }
+
     public static void removeOrphan() {
         Parent parent = em.find(Parent.class, 1L);
         parent.getChildren().remove(0); // DELETE FROM child WHERE id = ?
