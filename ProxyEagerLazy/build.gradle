@@ -7,7 +7,7 @@ group 'org.jetlag'
 version '1.0-SNAPSHOT'
 
 application {
-    getMainClass().set('org.jetlag.MemberTeamRelation')
+    getMainClass().set('org.jetlag.ProxyEagerLazy')
 }
 
 repositories {
