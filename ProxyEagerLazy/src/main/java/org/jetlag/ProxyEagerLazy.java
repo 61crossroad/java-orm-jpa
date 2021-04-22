@@ -14,6 +14,20 @@ public class ProxyEagerLazy {
 
     }
 
+    public static void removeCascade() {
+        Parent findParent = em.find(Parent.class, 1L);
+        em.remove(findParent);
+    }
+    public static void removeNoCascade() {
+        Parent findParent = em.find(Parent.class, 1L);
+        Child findChild1 = em.find(Child.class, 1L);
+        Child findChild2 = em.find(Child.class, 2L);
+
+        em.remove(findParent);
+        em.remove(findChild1);
+        em.remove(findChild2);
+    }
+
     public static void saveWithCascade() {
         Child child1 = new Child();
         Child child2 = new Child();
@@ -26,7 +40,6 @@ public class ProxyEagerLazy {
 
         em.persist(parent);
     }
-
     public static void saveNoCascade() {
         Parent parent = new Parent();
         em.persist(parent);
@@ -48,7 +61,6 @@ public class ProxyEagerLazy {
         System.out.println("회원 이름: " + member.getUsername());
         System.out.println("소속팀: " + team.getName());
     }
-
     public static void printUser(String memberId) {
         Member member = em.find(Member.class, memberId);
         System.out.println("회원 이름: " + member.getUsername());
