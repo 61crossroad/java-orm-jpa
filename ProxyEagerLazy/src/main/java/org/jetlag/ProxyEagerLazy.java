@@ -14,6 +14,15 @@ public class ProxyEagerLazy {
 
     }
 
+    public static void removeOrphan() {
+        Parent parent = em.find(Parent.class, 1L);
+        parent.getChildren().remove(0); // DELETE FROM child WHERE id = ?
+
+        // Be careful!!
+        parent.getChildren().clear();
+        // @OnetoOne, @OneToMany only
+    }
+
     public static void removeCascade() {
         Parent findParent = em.find(Parent.class, 1L);
         em.remove(findParent);
