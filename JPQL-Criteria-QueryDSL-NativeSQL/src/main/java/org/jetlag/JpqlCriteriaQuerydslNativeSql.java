@@ -1,5 +1,8 @@
 package org.jetlag;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -16,6 +19,14 @@ public class JpqlCriteriaQuerydslNativeSql {
 
     public static void main(String[] args) {
 
+    }
+
+    public static void createQueryQuerydsl() {
+        JPAQuery<Member> query = new JPAQuery(em);
+        QMember member = QMember.member;
+
+        List<Member> members =
+                query.select(member).where(member.username.eq("kim")).fetch();
     }
 
     public static void createQueryCriteria() {
