@@ -14,6 +14,19 @@ public class ProxyEagerLazy {
 
     }
 
+    public static void saveWithCascade() {
+        Child child1 = new Child();
+        Child child2 = new Child();
+
+        Parent parent = new Parent();
+        child1.setParent(parent);
+        child2.setParent(parent);
+        parent.getChildren().add(child1);
+        parent.getChildren().add(child2);
+
+        em.persist(parent);
+    }
+
     public static void saveNoCascade() {
         Parent parent = new Parent();
         em.persist(parent);
