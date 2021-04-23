@@ -1,9 +1,10 @@
 package org.jetlag;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import org.hibernate.Session;
+
+import javax.persistence.*;
+import java.util.List;
+import java.util.Optional;
 
 public class MemberTeamRelation {
     public static void main(String[] args) {
@@ -13,8 +14,10 @@ public class MemberTeamRelation {
 
         try {
             tx.begin();
-            saveOrder(em);
-            findOrder(em);
+            saveOneToOne(em);
+            findOneToOne(em);
+//            saveOrder(em);
+//            findOrder(em);
 //            saveEntity(em);
 //            findEntity(em);
 //            findInverse(em);
@@ -35,6 +38,34 @@ public class MemberTeamRelation {
             em.close();
         }
         emf.close();
+    }
+
+    public static void saveOneToOne(EntityManager em) {
+        for (int i = 0; i < 20; i++) {
+            OneToOneDominantMember member1 = new OneToOneDominantMember();
+            member1.setUsername("회원" + (i + 1));
+            if (i % 2 == 0) {
+                OneToOneDominantLocker locker1 = new OneToOneDominantLocker();
+                locker1.setName("라커" + (i + 1));
+                em.persist(locker1);
+                member1.setOneToOneDominantLocker(locker1);
+            }
+
+            em.persist(member1);
+        }
+    }
+
+    public static void findOneToOne(EntityManager em) {
+        Session session = em.unwrap(org.hibernate.Session.class);
+        List<OneToOneDominantMember> members = session.createQuery(
+                "from OneToOneDominantMember as member ",
+                OneToOneDominantMember.class)
+                .getResultList();
+
+        members.forEach(
+                result -> System.out.println(result.getUsername()
+                        + ": " + (Optional.ofNullable(result.getOneToOneDominantLocker()).isPresent() ?
+                        result.getOneToOneDominantLocker().getName() : "null")));
     }
 
     public static void saveOrder(EntityManager em) {
