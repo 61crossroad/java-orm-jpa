@@ -7,7 +7,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @DiscriminatorValue("B")
 @PrimaryKeyJoinColumn(name = "BOOK_ID")
-public class Book extends Item {
+public class JoinBook extends JoinItem {
     private String author;
     private String isbn;
 }
