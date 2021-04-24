@@ -3,6 +3,7 @@ package org.jetlag.repository;
 import org.jetlag.dto.TeamStatDTO;
 import org.jetlag.dto.UserDTO;
 import org.jetlag.entity.Member;
+import org.jetlag.entity.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,6 +15,12 @@ public class JpqlRepository {
 
     public JpqlRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void collectionFetchJoin() {
+        String jpql = "select t from Team t join fetch t.members";
+        em.createQuery(jpql, Team.class).getResultList()
+                .forEach(team -> System.out.println(team + " " + team.getMembers()));
     }
 
     public void fetchJoin() {

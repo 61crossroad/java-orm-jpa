@@ -26,11 +26,11 @@ public class Application {
             tx.begin();
 //            createQueryNativeSql();
 //            createQueryQuerydsl();
-
 //            init(20);
 
 //            jpqlRepository.innerJoin();
-            jpqlRepository.fetchJoin();
+//            jpqlRepository.fetchJoin();
+            jpqlRepository.collectionFetchJoin();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
