@@ -17,7 +17,8 @@ public class ValueTypes {
             tx.begin();
             // TODO: actions
 //            saveCollection();
-            // findCollection();
+//             findCollection();
+            updateCollection();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,6 +27,20 @@ public class ValueTypes {
             em.close();
         }
         emf.close();
+    }
+
+    private static void updateCollection() {
+        Member member = em.find(Member.class, 1L);
+
+        member.setHomeAddress(new Address("새로운 도시", "신도시1", "123456"));
+
+        Set<String> favoriteFoods = member.getFavoriteFoods();
+        favoriteFoods.remove("탕수육");
+        favoriteFoods.add("치킨");
+
+        List<Address> addressHistory = member.getAddressHistory();
+        addressHistory.remove(new Address("서울", "기존 주소", "123-123"));
+        addressHistory.add(new Address("새로운 도시", "새로운 주소", "123-456"));
     }
 
     private static void findCollection() {
