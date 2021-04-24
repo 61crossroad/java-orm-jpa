@@ -33,7 +33,8 @@ public class Application {
 //            jpqlRepository.collectionJoin();
 //            jpqlRepository.collectionFetchJoin();
 //            jpqlRepository.pathExpression();
-            jpqlRepository.collectionPathExpression();
+//            jpqlRepository.collectionPathExpression();
+            jpqlRepository.subQuries();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

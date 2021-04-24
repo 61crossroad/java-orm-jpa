@@ -18,6 +18,21 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void subQuries() {
+        TypedQuery<Member> query = em.createQuery(
+                "select m from Member m" +
+                        " where m.age > (select avg(m2.age) from Member m2)",
+                Member.class);
+        query.getResultList().forEach(System.out::println);
+
+        em.createQuery("select m from Member m" +
+                " where (select count(o) from Orders o where m = o.member) > 0", Member.class)
+                .getResultList().forEach(System.out::println);
+
+        em.createQuery("select m from Member m where m.orders.size > 0", Member.class)
+                .getResultList().forEach(System.out::println);
+    }
+
     public void collectionPathExpression() {
         TypedQuery<String> query = em.createQuery(
                 "select m.username from Team t join t.members m",
