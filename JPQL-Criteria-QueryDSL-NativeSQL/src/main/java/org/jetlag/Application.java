@@ -24,8 +24,12 @@ public class Application {
 
         try {
             tx.begin();
-            init(20);
-//            jpqlRepository.positionalParameter();
+//            createQueryNativeSql();
+//            createQueryQuerydsl();
+
+//            init(20);
+
+            jpqlRepository.mappingDtoInTypedQuery();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,12 +39,11 @@ public class Application {
         emf.close();
     }
 
-    /*
     private static void createQueryNativeSql() {
         String sql = "SELECT id, age, team_id, name FROM member WHERE name = 'kim'";
         List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
+        resultList.forEach(System.out::println);
     }
-     */
 
     private static void createQueryQuerydsl() {
         JPAQuery<Member> query = new JPAQuery<>(em);

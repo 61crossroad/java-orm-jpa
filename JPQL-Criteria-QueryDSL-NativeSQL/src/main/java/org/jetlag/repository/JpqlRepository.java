@@ -1,5 +1,6 @@
 package org.jetlag.repository;
 
+import org.jetlag.dto.UserDTO;
 import org.jetlag.entity.Member;
 
 import javax.persistence.EntityManager;
@@ -11,6 +12,14 @@ public class JpqlRepository {
 
     public JpqlRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void mappingDtoInTypedQuery() {
+        TypedQuery<UserDTO> query =
+                em.createQuery("select new org.jetlag.dto.UserDTO(m.username, m.age)" +
+                        " from Member m", UserDTO.class);
+
+        query.getResultList().forEach(System.out::println);
     }
 
     public void positionalParameter() {
