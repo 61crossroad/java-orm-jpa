@@ -32,7 +32,6 @@ build/
 *.class
 *.jar
 *.war
-generated/
 
 # Gradle
 .gradle/
