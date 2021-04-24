@@ -13,4 +13,16 @@ public class Address {
 
     @Embedded
     private Zipcode zipcode;
+
+    protected Address() {}
+
+    public Address(String city, String street, Zipcode zipcode) {
+        this.city = city;
+        this.street = street;
+        this.zipcode = zipcode;
+    }
+
+    public String getCity() {
+        return city;
+    }
 }
