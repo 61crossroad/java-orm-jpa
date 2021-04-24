@@ -11,9 +11,7 @@ public class Member {
     private Long id;
     private String name;
 
-    @Embedded
-    Period workPeriod;
-
-    @Embedded
-    Address homeAddress;
+    @Embedded Period workPeriod;
+    @Embedded Address homeAddress;
+    @Embedded PhoneNumber phoneNumber;
 }
