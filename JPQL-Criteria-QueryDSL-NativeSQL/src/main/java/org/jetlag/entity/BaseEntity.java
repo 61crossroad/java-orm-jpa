@@ -5,7 +5,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Collection;
-import java.util.Optional;
 
 @MappedSuperclass
 public abstract class BaseEntity {
