@@ -32,7 +32,8 @@ public class Application {
 //            jpqlRepository.fetchJoin();
 //            jpqlRepository.collectionJoin();
 //            jpqlRepository.collectionFetchJoin();
-            jpqlRepository.pathExpression();
+//            jpqlRepository.pathExpression();
+            jpqlRepository.collectionPathExpression();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +107,10 @@ public class Application {
             order.setMember(members.get((int) (Math.random() * members.size())));
             order.setProduct(products.get((int) (Math.random() * products.size())));
             order.setOrderAmount((i + 1) * 2);
-            order.setAddress(new Address("city" + (i + 1), "street" + (i * 10), "" + i + (i + 1) + (i + 3)));
+            order.setAddress(new Address(
+                    "city" + (i + 1),
+                    "street" + (i * 10),
+                    "" + i + (i + 1) + (i + 3)));
             em.persist(order);
         }
     }

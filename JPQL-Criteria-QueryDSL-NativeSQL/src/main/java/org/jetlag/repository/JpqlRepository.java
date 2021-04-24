@@ -18,12 +18,21 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void collectionPathExpression() {
+        TypedQuery<String> query = em.createQuery(
+                "select m.username from Team t join t.members m",
+                String.class);
+        query.getResultList().forEach(System.out::println);
+
+        em.createQuery("select t.members.size from Team t", Integer.class)
+                .getResultList().forEach(System.out::println);
+    }
     public void pathExpression() {
         String jpql = "select o.member.team from Orders o" +
                 " where o.product.name = 'product20' and o.address.city = 'city10'";
         TypedQuery<Team> query = em.createQuery(jpql, Team.class);
         query.getResultList().forEach(System.out::println);
-        
+
 //        em.createQuery(jpql, Team.class).getResultList()
 //                .forEach(System.out::println);
     }
