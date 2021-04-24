@@ -1,10 +1,13 @@
 package org.jetlag;
 
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@ToString
 @Entity
 public class Member {
     @Id @GeneratedValue

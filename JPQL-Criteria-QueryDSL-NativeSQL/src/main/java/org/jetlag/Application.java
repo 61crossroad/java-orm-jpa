@@ -1,5 +1,7 @@
 package org.jetlag;
 
+import com.querydsl.jpa.impl.JPAQuery;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,7 +19,8 @@ public class Application {
     public static void main(String[] args) {
         try {
             tx.begin();
-            init(10);
+//            init(10);
+            createQueryQuerydsl();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,24 +28,23 @@ public class Application {
             em.close();
         }
         emf.close();
-
-//        createQueryQuerydsl();
     }
-/*
+    /*
     public static void createQueryNativeSql() {
         String sql = "SELECT id, age, team_id, name FROM member WHERE name = 'kim'";
         List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
     }
+     */
 
     public static void createQueryQuerydsl() {
-        JPAQuery<Member> query = new JPAQuery(em);
+        JPAQuery<Member> query = new JPAQuery<>(em);
         QMember member = QMember.member;
 
         List<Member> members =
-                query.select(member).where(member.username.eq("kim")).fetch();
+                query.select(member).from(member).where(member.username.eq("kim")).fetch();
         members.forEach(System.out::println);
     }
-*/
+
     public static void createQueryCriteria() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Member> query = cb.createQuery(Member.class);
