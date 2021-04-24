@@ -16,16 +16,24 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void fetchJoin() {
+        String jpql = "select m from Member m join fetch m.team";
+
+        List<Member> members = em.createQuery(jpql, Member.class).getResultList();
+        members.forEach(member -> System.out.println(member.toString() + " " + member.getTeam()));
+    }
+
     public void innerJoin() {
         String teamName = "team10";
-        String query = "select m from Member m inner join m.team t" +
-                " where t.name = :teamName";
 
-        List<Member> members = em.createQuery(query, Member.class)
-                .setParameter("teamName", teamName)
-                .getResultList();
+//        String query = "select m from Member m inner join m.team t where t.name = :teamName";
+//        List<Member> members = em.createQuery(query, Member.class)
+//                .setParameter("teamName", teamName)
+//                .getResultList();
 
-        members.forEach(System.out::println);
+        String query = "select m from Member m inner join m.team t";
+        List<Member> members = em.createQuery(query, Member.class).getResultList();
+        members.forEach(member -> System.out.println(member.toString() + " " + member.getTeam()));
     }
 
     public void groupByHaving() {

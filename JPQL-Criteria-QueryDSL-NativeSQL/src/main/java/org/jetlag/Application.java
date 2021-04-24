@@ -29,7 +29,8 @@ public class Application {
 
 //            init(20);
 
-            jpqlRepository.innerJoin();
+//            jpqlRepository.innerJoin();
+            jpqlRepository.fetchJoin();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

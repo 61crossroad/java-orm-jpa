@@ -26,7 +26,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final ListPath<Orders, QOrders> orders = this.<Orders, QOrders>createList("orders", Orders.class, QOrders.class, PathInits.DIRECT2);
 
