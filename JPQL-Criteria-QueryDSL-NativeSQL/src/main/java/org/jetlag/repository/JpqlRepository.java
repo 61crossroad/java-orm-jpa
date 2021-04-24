@@ -1,5 +1,6 @@
 package org.jetlag.repository;
 
+import org.jetlag.dto.TeamStatDTO;
 import org.jetlag.dto.UserDTO;
 import org.jetlag.entity.Member;
 
@@ -12,6 +13,26 @@ public class JpqlRepository {
 
     public JpqlRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void groupByHaving() {
+        TypedQuery<TeamStatDTO> query =
+                em.createQuery("select new org.jetlag.dto.TeamStatDTO(" +
+                        " t.name, count (m.age), sum(m.age), avg(m.age), max(m.age), min(m.age))" +
+                        " from Member m left join m.team t" +
+                        " group by t.name having 20 <= avg(m.age) and avg(m.age) <= 30", TeamStatDTO.class);
+
+        query.getResultList().forEach(System.out::println);
+    }
+
+    public void paging() {
+        TypedQuery<Member> query =
+                em.createQuery("select m from Member m order by m.username desc",
+                        Member.class);
+
+        query.setFirstResult(3);
+        query.setMaxResults(5);
+        query.getResultList().forEach(System.out::println);
     }
 
     public void mappingDtoInTypedQuery() {
