@@ -6,4 +6,11 @@ import javax.persistence.Embeddable;
 public class Zipcode {
     String zip;
     String plusFour;
+
+    protected Zipcode() {}
+
+    public Zipcode(String zip, String plusFour) {
+        this.zip = zip;
+        this.plusFour = plusFour;
+    }
 }
