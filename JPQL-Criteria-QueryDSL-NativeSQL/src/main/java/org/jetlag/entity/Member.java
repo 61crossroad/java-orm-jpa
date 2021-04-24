@@ -27,7 +27,7 @@ public class Member extends BaseEntity {
 
     public void setTeam(Team team) {
         Collection<Member> thisTeamMembers = this.team == null ? null : this.team.getMembers();
-        super.setRelatedEntity(this, this.team, thisTeamMembers, team, team.getMembers());
+        super.setRelatedEntity(this, this.team, thisTeamMembers, team.getMembers());
         this.team = team;
     }
 

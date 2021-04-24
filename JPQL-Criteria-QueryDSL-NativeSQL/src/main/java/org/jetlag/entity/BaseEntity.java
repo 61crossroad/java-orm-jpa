@@ -13,7 +13,7 @@ public abstract class BaseEntity {
     private Long id;
 
     protected <T, S, V extends Collection<T>> void setRelatedEntity(
-            T _this, S _thisMany, V _thisOnesCollection, S newMany, V newOnesCollection) {
+            T _this, S _thisMany, V _thisOnesCollection, V newOnesCollection) {
         if (_thisMany != null) {
             _thisOnesCollection.remove(_this);
         }

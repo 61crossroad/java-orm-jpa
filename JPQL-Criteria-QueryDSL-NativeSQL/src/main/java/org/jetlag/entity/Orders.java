@@ -18,7 +18,7 @@ public class Orders extends BaseEntity {
 
     public void setMember(Member member) {
         Collection<Orders> thisMemberOrders = this.member == null ? null : this.member.getOrders();;
-        super.setRelatedEntity(this, this.member, thisMemberOrders, member, member.getOrders());
+        super.setRelatedEntity(this, this.member, thisMemberOrders, member.getOrders());
         this.member = member;
     }
 
@@ -27,7 +27,7 @@ public class Orders extends BaseEntity {
 
     public void setProduct(Product product) {
         Collection<Orders> thisProductOrders = this.product == null ? null : this.product.getOrders();
-        super.setRelatedEntity(this, this.product, thisProductOrders, product, product.getOrders());
+        super.setRelatedEntity(this, this.product, thisProductOrders, product.getOrders());
         this.product = product;
     }
 
