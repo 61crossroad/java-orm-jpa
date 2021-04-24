@@ -5,12 +5,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
-@ToString(exclude = "team")
+@ToString(exclude = {"team", "orders"})
 @Setter
 @Getter
 @Entity
-public class Member {
+public class Member extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,22 +25,19 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    public void setTeam(Team team) {
+        Collection<Member> thisTeamMembers = this.team == null ? null : this.team.getMembers();
+        super.setRelatedEntity(this, this.team, thisTeamMembers, team, team.getMembers());
+        this.team = team;
+    }
+
+    @OneToMany(mappedBy = "member")
+    private List<Orders> orders;
+
     public Member() {}
 
     public Member(String username, int age) {
         this.username = username;
         this.age = age;
-    }
-
-    public void setTeam(Team team) {
-        if (this.team != null) {
-            this.team.getMembers().remove(this);
-        }
-
-        this.team = team;
-
-        if (!team.getMembers().contains(this)) {
-            team.getMembers().add(this);
-        }
     }
 }

@@ -22,9 +22,13 @@ public class QMember extends EntityPathBase<Member> {
 
     public static final QMember member = new QMember("member1");
 
+    public final QBaseEntity _super = new QBaseEntity(this);
+
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final ListPath<Orders, QOrders> orders = this.<Orders, QOrders>createList("orders", Orders.class, QOrders.class, PathInits.DIRECT2);
 
     public final QTeam team;
 

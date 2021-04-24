@@ -20,7 +20,10 @@ public class QTeam extends EntityPathBase<Team> {
 
     public static final QTeam team = new QTeam("team");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final QBaseEntity _super = new QBaseEntity(this);
+
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     public final ListPath<Member, QMember> members = this.<Member, QMember>createList("members", Member.class, QMember.class, PathInits.DIRECT2);
 

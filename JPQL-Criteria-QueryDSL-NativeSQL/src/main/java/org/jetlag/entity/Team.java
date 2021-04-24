@@ -1,17 +1,16 @@
 package org.jetlag.entity;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString(exclude = "members")
 @Getter
 @Entity
-public class Team {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Team extends BaseEntity {
     private String name;
 
     public Team() {}

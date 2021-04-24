@@ -1,9 +1,7 @@
 package org.jetlag;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import org.jetlag.entity.Member;
-import org.jetlag.entity.QMember;
-import org.jetlag.entity.Team;
+import org.jetlag.entity.*;
 import org.jetlag.repository.JpqlRepository;
 
 import javax.persistence.EntityManager;
@@ -26,7 +24,7 @@ public class Application {
 
         try {
             tx.begin();
-            init(10);
+            init(20);
 //            jpqlRepository.positionalParameter();
             tx.commit();
         } catch (Exception e) {
@@ -75,17 +73,35 @@ public class Application {
         em.persist(memberKim);
 
         List<Team> teams = new ArrayList<>();
+
         for (int i = 0; i <= n / 2; i++) {
             Team team = new Team("team" + (i + 1));
             teams.add(team);
             em.persist(team);
         }
 
+        List<Member> members = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
             Member member = new Member("user" + (i + 1), 20 + i);
-            Team team = teams.get(i / 2);
+            Team team = teams.get((int) (Math.random() * teams.size()));
             member.setTeam(team);
+            members.add(member);
             em.persist(member);
+
+            Product product = new Product("product" + (i + 1), i * 10000, i * 11);
+            products.add(product);
+            em.persist(product);
+        }
+
+        for (int i = 0; i < n / 2; i++) {
+            Orders order = new Orders();
+            order.setMember(members.get((int) (Math.random() * members.size())));
+            order.setProduct(products.get((int) (Math.random() * products.size())));
+            order.setOrderAmount((i + 1) * 2);
+            order.setAddress(new Address("city" + (i + 1), "street" + (i * 10), "" + i + (i + 1) + (i + 3)));
+            em.persist(order);
         }
     }
 }
