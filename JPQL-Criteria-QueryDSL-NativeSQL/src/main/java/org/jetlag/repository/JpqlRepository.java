@@ -7,12 +7,25 @@ import org.jetlag.entity.Member;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class JpqlRepository {
     private final EntityManager em;
 
     public JpqlRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void innerJoin() {
+        String teamName = "team10";
+        String query = "select m from Member m inner join m.team t" +
+                " where t.name = :teamName";
+
+        List<Member> members = em.createQuery(query, Member.class)
+                .setParameter("teamName", teamName)
+                .getResultList();
+
+        members.forEach(System.out::println);
     }
 
     public void groupByHaving() {

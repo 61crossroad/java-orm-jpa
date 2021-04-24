@@ -29,7 +29,7 @@ public class Application {
 
 //            init(20);
 
-            jpqlRepository.groupByHaving();
+            jpqlRepository.innerJoin();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
