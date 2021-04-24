@@ -14,5 +14,5 @@ public class OneToOneParent {
     @JoinTable(name = "PARENT_CHILD",
             joinColumns = @JoinColumn(name = "PARENT_ID"),
             inverseJoinColumns = @JoinColumn(name = "CHILD_ID"))
-    private Child child;
+    private OneToOneChild oneToOneChild;
 }
