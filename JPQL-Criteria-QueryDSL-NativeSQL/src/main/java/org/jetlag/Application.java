@@ -28,10 +28,11 @@ public class Application {
 //            createQueryQuerydsl();
 //            init(20);
 
-            jpqlRepository.innerJoin();
+//            jpqlRepository.innerJoin();
 //            jpqlRepository.fetchJoin();
-            jpqlRepository.collectionJoin();
+//            jpqlRepository.collectionJoin();
 //            jpqlRepository.collectionFetchJoin();
+            jpqlRepository.pathExpression();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

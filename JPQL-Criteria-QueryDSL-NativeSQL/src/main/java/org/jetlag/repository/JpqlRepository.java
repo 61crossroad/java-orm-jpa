@@ -3,6 +3,7 @@ package org.jetlag.repository;
 import org.jetlag.dto.TeamStatDTO;
 import org.jetlag.dto.UserDTO;
 import org.jetlag.entity.Member;
+import org.jetlag.entity.Orders;
 import org.jetlag.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,16 @@ public class JpqlRepository {
 
     public JpqlRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void pathExpression() {
+        String jpql = "select o.member.team from Orders o" +
+                " where o.product.name = 'product20' and o.address.city = 'city10'";
+        TypedQuery<Team> query = em.createQuery(jpql, Team.class);
+        query.getResultList().forEach(System.out::println);
+        
+//        em.createQuery(jpql, Team.class).getResultList()
+//                .forEach(System.out::println);
     }
 
     public void collectionFetchJoin() {
