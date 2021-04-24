@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
+import java.util.Set;
 
 public class ValueTypes {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("value_types");
@@ -14,7 +16,8 @@ public class ValueTypes {
         try {
             tx.begin();
             // TODO: actions
-            saveCollection();
+//            saveCollection();
+            // findCollection();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,8 +28,24 @@ public class ValueTypes {
         emf.close();
     }
 
+    private static void findCollection() {
+        Member member = em.find(Member.class, 1L);
+
+        Address homeAddress = member.getHomeAddress();
+        System.out.println(homeAddress.getCity());
+
+        Set<String> favoriteFoods = member.getFavoriteFoods();
+
+        favoriteFoods.forEach(food -> System.out.println("favoriteFood = " + food));
+
+        List<Address> addressHistory = member.getAddressHistory();
+
+        addressHistory.get(0);
+    }
+
     private static void saveCollection() {
         Member member = new Member();
+        member.setName("회원1");
 
         member.setHomeAddress(new Address("통영", "몽돌해수욕장", "660-123"));
 
