@@ -1,6 +1,10 @@
 package org.jetlag;
 
 import com.querydsl.jpa.impl.JPAQuery;
+import org.jetlag.entity.Member;
+import org.jetlag.entity.QMember;
+import org.jetlag.entity.Team;
+import org.jetlag.repository.JpqlRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
@@ -17,10 +22,12 @@ public class Application {
     private static final EntityTransaction tx = em.getTransaction();
 
     public static void main(String[] args) {
+        JpqlRepository jpqlRepository = new JpqlRepository(em);
+
         try {
             tx.begin();
-//            init(10);
-            createQueryQuerydsl();
+            init(10);
+//            jpqlRepository.positionalParameter();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,14 +36,15 @@ public class Application {
         }
         emf.close();
     }
+
     /*
-    public static void createQueryNativeSql() {
+    private static void createQueryNativeSql() {
         String sql = "SELECT id, age, team_id, name FROM member WHERE name = 'kim'";
         List<Member> resultList = em.createNativeQuery(sql, Member.class).getResultList();
     }
      */
 
-    public static void createQueryQuerydsl() {
+    private static void createQueryQuerydsl() {
         JPAQuery<Member> query = new JPAQuery<>(em);
         QMember member = QMember.member;
 
@@ -45,7 +53,7 @@ public class Application {
         members.forEach(System.out::println);
     }
 
-    public static void createQueryCriteria() {
+    private static void createQueryCriteria() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
@@ -57,7 +65,7 @@ public class Application {
         List<Member> resultList = em.createQuery(cq).getResultList();
     }
 
-    public static void createQueryJqpl() {
+    private static void createQueryJqpl() {
         String jpql = "select m from Member as m where m.username = 'kim'";
         List<Member> resultList = em.createQuery(jpql, Member.class).getResultList();
     }
@@ -66,8 +74,17 @@ public class Application {
         Member memberKim = new Member("kim", 17);
         em.persist(memberKim);
 
-        for (int i = 1; i <= n; i++) {
-            Member member = new Member("회원" + i, 20 + i);
+        List<Team> teams = new ArrayList<>();
+        for (int i = 0; i <= n / 2; i++) {
+            Team team = new Team("team" + (i + 1));
+            teams.add(team);
+            em.persist(team);
+        }
+
+        for (int i = 0; i < n; i++) {
+            Member member = new Member("user" + (i + 1), 20 + i);
+            Team team = teams.get(i / 2);
+            member.setTeam(team);
             em.persist(member);
         }
     }
