@@ -18,16 +18,29 @@ public class JpqlRepository {
     }
 
     public void collectionFetchJoin() {
-        String jpql = "select t from Team t join fetch t.members";
+        String jpql = "select distinct t from Team t join fetch t.members";
         em.createQuery(jpql, Team.class).getResultList()
-                .forEach(team -> System.out.println(team + " " + team.getMembers()));
+                .forEach(team -> {
+                    System.out.println(team);
+                    team.getMembers().forEach(System.out::println);
+                });
     }
 
     public void fetchJoin() {
         String jpql = "select m from Member m join fetch m.team";
 
         List<Member> members = em.createQuery(jpql, Member.class).getResultList();
-        members.forEach(member -> System.out.println(member.toString() + " " + member.getTeam()));
+        members.forEach(member -> System.out.println(member + " " + member.getTeam()));
+    }
+
+    public void collectionJoin() {
+        String query = "select t from Team t left join t.members m";
+        em.createQuery(query, Team.class).getResultList()
+                .forEach(System.out::println);
+//                .forEach(team -> {
+//                    System.out.println(team);
+//                    team.getMembers().forEach(System.out::println);
+//                });
     }
 
     public void innerJoin() {
@@ -40,7 +53,8 @@ public class JpqlRepository {
 
         String query = "select m from Member m inner join m.team t";
         List<Member> members = em.createQuery(query, Member.class).getResultList();
-        members.forEach(member -> System.out.println(member.toString() + " " + member.getTeam()));
+//        members.forEach(member -> System.out.println(member.toString() + " " + member.getTeam()));
+        members.forEach(System.out::println);
     }
 
     public void groupByHaving() {
