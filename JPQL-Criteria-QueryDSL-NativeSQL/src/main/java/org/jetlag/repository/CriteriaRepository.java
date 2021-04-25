@@ -4,8 +4,10 @@ import org.jetlag.dto.MemberDTO;
 import org.jetlag.entity.Member;
 import org.jetlag.entity.Orders;
 import org.jetlag.entity.Product;
+import org.jetlag.entity.Team;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -16,6 +18,36 @@ public class CriteriaRepository {
 
      public CriteriaRepository(EntityManager em) {
          this.em = em;
+     }
+
+     public void fetchJoin() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+
+         Root<Member> m = cq.from(Member.class);
+         Fetch<Member, Team> t = m.fetch("team");
+
+         cq.select(m).where(cb.equal(m.get("team").get("name"), "team10"));
+         TypedQuery<Member> query = em.createQuery(cq);
+         query.getResultList()
+                 .forEach(res -> System.out.println(res + " " + res.getTeam()));
+     }
+
+     public void join() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+
+         Root<Member> m = cq.from(Member.class);
+         Join<Member, Team> t = m.join("team", JoinType.INNER);
+
+         cq.multiselect(m, t)
+                 .where(cb.equal(t.get("name"), "team10"));
+         TypedQuery<Object[]> query = em.createQuery(cq);
+         query.getResultList().forEach(result -> {
+             Member member = (Member) result[0];
+             Team team = (Team) result[1];
+             System.out.println(member + " " + team);
+         });
      }
 
      public void sorting() {

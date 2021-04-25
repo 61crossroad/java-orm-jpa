@@ -29,7 +29,9 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-            criteriaRepository.sorting();
+//            criteriaRepository.sorting();
+//            criteriaRepository.join();
+            criteriaRepository.fetchJoin();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
