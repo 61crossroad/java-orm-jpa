@@ -1,7 +1,7 @@
 package org.jetlag.repository;
 
 import org.jetlag.dto.TeamStatDTO;
-import org.jetlag.dto.UserDTO;
+import org.jetlag.dto.MemberDTO;
 import org.jetlag.entity.Member;
 import org.jetlag.entity.Orders;
 import org.jetlag.entity.Team;
@@ -157,9 +157,9 @@ public class JpqlRepository {
     }
 
     public void mappingDtoInTypedQuery() {
-        TypedQuery<UserDTO> query =
-                em.createQuery("select new org.jetlag.dto.UserDTO(m.username, m.age)" +
-                        " from Member m", UserDTO.class);
+        TypedQuery<MemberDTO> query =
+                em.createQuery("select new org.jetlag.dto.MemberDTO(m.username, m.age)" +
+                        " from Member m", MemberDTO.class);
 
         query.getResultList().forEach(System.out::println);
     }

@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 @Getter
-public class UserDTO {
+public class MemberDTO {
     private final String username;
     private final int age;
 }

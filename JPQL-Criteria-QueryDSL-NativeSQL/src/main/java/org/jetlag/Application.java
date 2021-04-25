@@ -27,7 +27,12 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-            criteriaRepository.simpleSelect();
+//            criteriaRepository.simpleSelect();
+//            criteriaRepository.selectMemberWithWhereAndOrderBy();
+//            criteriaRepository.selectMemberWhereAge();
+//            criteriaRepository.criteriaConstruct();
+//            criteriaRepository.tuple();
+            criteriaRepository.tupleMappedEntity();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
