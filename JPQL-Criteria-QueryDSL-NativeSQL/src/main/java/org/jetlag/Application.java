@@ -2,6 +2,7 @@ package org.jetlag;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import org.jetlag.entity.*;
+import org.jetlag.repository.CriteriaRepository;
 import org.jetlag.repository.JpqlRepository;
 
 import javax.persistence.EntityManager;
@@ -21,13 +22,12 @@ public class Application {
 
     public static void main(String[] args) {
         JpqlRepository jpqlRepository = new JpqlRepository(em);
+        CriteriaRepository criteriaRepository = new CriteriaRepository(em);
 
         try {
             tx.begin();
 //            init(20);
-//            createQueryNativeSql();
-//            createQueryQuerydsl();
-            jpqlRepository.namedQueriesFromXml();
+            criteriaRepository.simpleSelect();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
