@@ -31,7 +31,7 @@ public class Application {
 //            init(20);
 //            criteriaRepository.sorting();
 //            criteriaRepository.join();
-            criteriaRepository.fetchJoin();
+            criteriaRepository.simpleSubQuery();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

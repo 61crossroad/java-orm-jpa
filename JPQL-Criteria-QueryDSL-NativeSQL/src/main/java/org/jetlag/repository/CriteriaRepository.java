@@ -20,6 +20,23 @@ public class CriteriaRepository {
          this.em = em;
      }
 
+     public void simpleSubQuery() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Member> mainQuery = cb.createQuery(Member.class);
+
+         Subquery<Double> subQuery = mainQuery.subquery(Double.class);
+         Root<Member> m2 = subQuery.from(Member.class);
+         subQuery.select(cb.avg(m2.<Integer>get("age")));
+
+         Root<Member> m = mainQuery.from(Member.class);
+         mainQuery.select(m)
+                 .where(cb.ge(m.<Integer>get("age"), subQuery));
+
+         TypedQuery<Member> query = em.createQuery(mainQuery);
+         List<Member> resultList = query.getResultList();
+         resultList.forEach(System.out::println);
+     }
+
      public void fetchJoin() {
          CriteriaBuilder cb = em.getCriteriaBuilder();
          CriteriaQuery<Member> cq = cb.createQuery(Member.class);
