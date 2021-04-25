@@ -3,10 +3,7 @@ package org.jetlag.repository;
 import com.querydsl.core.QueryModifiers;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
-import org.jetlag.entity.Member;
-import org.jetlag.entity.Product;
-import org.jetlag.entity.QMember;
-import org.jetlag.entity.QProduct;
+import org.jetlag.entity.*;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -16,6 +13,19 @@ public class QuerydslRepository {
 
     public QuerydslRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void basicJoin() {
+        JPAQuery<Orders> query = new JPAQuery<>(em);
+        QOrders orders = QOrders.orders;
+        QProduct product = QProduct.product;
+        QMember member = QMember.member;
+
+        query.from(orders)
+                .join(orders.product, product)
+                .leftJoin(orders.member, member)
+                .fetch()
+                .forEach(o -> System.out.println(o.getId() + " " + o.toString()));
     }
 
     public void pagingWithFetchResults() {
