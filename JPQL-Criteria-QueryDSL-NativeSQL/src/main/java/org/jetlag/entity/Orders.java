@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Collection;
 
 @ToString(exclude = {"member", "product"})
@@ -19,7 +16,7 @@ public class Orders extends BaseEntity {
     private Member member;
 
     public void setMember(Member member) {
-        Collection<Orders> thisMemberOrders = this.member == null ? null : this.member.getOrders();;
+        Collection<Orders> thisMemberOrders = this.member == null ? null : this.member.getOrders();
         super.setRelatedEntity(this, this.member, thisMemberOrders, member.getOrders());
         this.member = member;
     }

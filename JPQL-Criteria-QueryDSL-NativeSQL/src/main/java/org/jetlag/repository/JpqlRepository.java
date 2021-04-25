@@ -18,6 +18,15 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void collectionEquation() {
+        TypedQuery<Team> query = em.createQuery("select t from Team t" +
+                " where :memberParam member of t.members", Team.class);
+        Member member = em.createQuery("select m from Member m where m.username = :username",
+                Member.class).setParameter("username", "user4").getSingleResult();
+        query.setParameter("memberParam", member);
+
+        query.getResultList().forEach(System.out::println);
+    }
     public void subQueryFunctions() {
         em.createQuery("select m from Member m" +
                 " where exists (select t from m.team t where t.name = 'team10')", Member.class)

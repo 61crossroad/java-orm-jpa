@@ -35,7 +35,8 @@ public class Application {
 //            jpqlRepository.pathExpression();
 //            jpqlRepository.collectionPathExpression();
 //            jpqlRepository.subQuries();
-            jpqlRepository.subQueryFunctions();
+//            jpqlRepository.subQueryFunctions();
+            jpqlRepository.collectionEquation();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
