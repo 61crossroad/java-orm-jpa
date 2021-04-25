@@ -29,8 +29,7 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-//            dynamicQueryRepository.jpqlDynamicQuery();
-            dynamicQueryRepository.criteriaDynamicQuery();
+            criteriaRepository.sorting();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -12,7 +12,8 @@ import java.util.Collection;
 @Getter
 @Entity
 public class Orders extends BaseEntity {
-    @ManyToOne @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     public void setMember(Member member) {
@@ -21,7 +22,8 @@ public class Orders extends BaseEntity {
         this.member = member;
     }
 
-    @ManyToOne @JoinColumn(name = "product_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public void setProduct(Product product) {

@@ -2,6 +2,8 @@ package org.jetlag.repository;
 
 import org.jetlag.dto.MemberDTO;
 import org.jetlag.entity.Member;
+import org.jetlag.entity.Orders;
+import org.jetlag.entity.Product;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
@@ -14,6 +16,49 @@ public class CriteriaRepository {
 
      public CriteriaRepository(EntityManager em) {
          this.em = em;
+     }
+
+     public void sorting() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
+         Root<Orders> o = cq.from(Orders.class);
+
+         Predicate orderAmountGt10 = cb.greaterThan(o.get("orderAmount"), 10);
+         Order productPriceDesc = cb.desc(o.get("product").get("price"));
+
+         cq.select(cb.tuple(
+                 o.alias("o"),
+                 o.get("product").alias("p")))
+                 .where(orderAmountGt10)
+                 .orderBy(productPriceDesc);
+
+         em.createQuery(cq).getResultList().forEach(result -> {
+             Orders order = result.get("o", Orders.class);
+             Product product = result.get("p", Product.class);
+             System.out.println(order + " " + product);
+         });
+     }
+
+     public void groupByHaving() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+         Root<Member> m = cq.from(Member.class);
+
+         Expression<Integer> maxAge = cb.max(m.get("age"));
+         Expression<Integer> minAge = cb.min(m.get("age"));
+
+         cq.multiselect(m.get("team").get("name"), maxAge, minAge)
+                 .groupBy(m.get("team").get("name"))
+                 .having(cb.gt(minAge, 30));
+
+         TypedQuery<Object[]> query = em.createQuery(cq);
+         List<Object[]> resultList = query.getResultList();
+         resultList.forEach(result -> {
+             String teamName = result[0].toString();
+             Integer _maxAge = (Integer) result[1];
+             Integer _minAge = (Integer) result[2];
+             System.out.println(teamName + " " + _minAge + " ~ " + _maxAge);
+         });
      }
 
      public void tupleMappedEntity() {
