@@ -5,6 +5,7 @@ import org.jetlag.entity.*;
 import org.jetlag.repository.CriteriaRepository;
 import org.jetlag.repository.DynamicQueryRepository;
 import org.jetlag.repository.JpqlRepository;
+import org.jetlag.repository.QuerydslRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,13 +26,14 @@ public class Application {
         JpqlRepository jpqlRepository = new JpqlRepository(em);
         CriteriaRepository criteriaRepository = new CriteriaRepository(em);
         DynamicQueryRepository dynamicQueryRepository = new DynamicQueryRepository(em);
+        QuerydslRepository querydslRepository = new QuerydslRepository(em);
 
         try {
             tx.begin();
 //            init(20);
 //            criteriaRepository.sorting();
 //            criteriaRepository.join();
-            criteriaRepository.relatedSubQuery();
+            querydslRepository.selectWithWhere();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
