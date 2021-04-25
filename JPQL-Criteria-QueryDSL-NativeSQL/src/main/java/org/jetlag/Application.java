@@ -33,7 +33,7 @@ public class Application {
 //            init(20);
 //            criteriaRepository.sorting();
 //            criteriaRepository.join();
-            querydslRepository.selectWithWhere();
+            querydslRepository.pagingWithFetchResults();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
