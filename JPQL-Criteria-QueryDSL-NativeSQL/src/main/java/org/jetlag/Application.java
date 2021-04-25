@@ -3,6 +3,7 @@ package org.jetlag;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.jetlag.entity.*;
 import org.jetlag.repository.CriteriaRepository;
+import org.jetlag.repository.DynamicQueryRepository;
 import org.jetlag.repository.JpqlRepository;
 
 import javax.persistence.EntityManager;
@@ -23,16 +24,13 @@ public class Application {
     public static void main(String[] args) {
         JpqlRepository jpqlRepository = new JpqlRepository(em);
         CriteriaRepository criteriaRepository = new CriteriaRepository(em);
+        DynamicQueryRepository dynamicQueryRepository = new DynamicQueryRepository(em);
 
         try {
             tx.begin();
 //            init(20);
-//            criteriaRepository.simpleSelect();
-//            criteriaRepository.selectMemberWithWhereAndOrderBy();
-//            criteriaRepository.selectMemberWhereAge();
-//            criteriaRepository.criteriaConstruct();
-//            criteriaRepository.tuple();
-            criteriaRepository.tupleMappedEntity();
+//            dynamicQueryRepository.jpqlDynamicQuery();
+            dynamicQueryRepository.criteriaDynamicQuery();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
