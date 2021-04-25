@@ -2,6 +2,7 @@ package org.jetlag.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.Collection;
 
+@ToString(exclude = {"member", "product"})
 @Setter
 @Getter
 @Entity

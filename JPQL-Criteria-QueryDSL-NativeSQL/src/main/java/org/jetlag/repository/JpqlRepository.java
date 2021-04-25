@@ -18,12 +18,30 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void subQueryFunctions() {
+        em.createQuery("select m from Member m" +
+                " where exists (select t from m.team t where t.name = 'team10')", Member.class)
+                .getResultList().forEach(member -> System.out.println(member + " " + member.getTeam()));
+
+        em.createQuery("select o from Orders o" +
+                " where o.orderAmount > any(select p.stockAmount from Product p)", Orders.class)
+                .getResultList().forEach(System.out::println);
+
+        em.createQuery("select m from Member m" +
+                " where m.team = any(select t from Team t)", Member.class)
+                .getResultList().forEach(System.out::println);
+
+        em.createQuery("select t from Team t" +
+                " where t in(select t2 from Team t2 join t2.members m2 where m2.age >= 30)", Team.class)
+                .getResultList().forEach(System.out::println);
+    }
+
     public void subQuries() {
         TypedQuery<Member> query = em.createQuery(
                 "select m from Member m" +
                         " where m.age > (select avg(m2.age) from Member m2)",
                 Member.class);
-        query.getResultList().forEach(System.out::println);
+        query.getResultList().forEach(member -> System.out.println(member + " " + member.getOrders()));
 
         em.createQuery("select m from Member m" +
                 " where (select count(o) from Orders o where m = o.member) > 0", Member.class)
