@@ -20,6 +20,24 @@ public class CriteriaRepository {
          this.em = em;
      }
 
+     public void relatedSubQuery() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+
+         CriteriaQuery<Member> mainQuery = cb.createQuery(Member.class);
+         Root<Member> m = mainQuery.from(Member.class);
+
+         Subquery<Team> subQuery = mainQuery.subquery(Team.class);
+         Root<Member> subM = subQuery.correlate(m);
+
+         Join<Member, Team> t = subM.join("team");
+
+         subQuery.select(t).where(cb.equal(t.get("name"), "team10"));
+         mainQuery.select(m).where(cb.exists(subQuery));
+
+         List<Member> resultList = em.createQuery(mainQuery).getResultList();
+         resultList.forEach(System.out::println);
+     }
+
      public void simpleSubQuery() {
          CriteriaBuilder cb = em.getCriteriaBuilder();
          CriteriaQuery<Member> mainQuery = cb.createQuery(Member.class);
