@@ -18,6 +18,22 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    public void namedQueriesFromXml() {
+        em.createNamedQuery("Member.findByUsernameXml", Member.class)
+                .setParameter("username", "user4")
+                .getResultList()
+                .forEach(System.out::println);
+
+        Long count = em.createNamedQuery("Member.countXml", Long.class).getSingleResult();
+        System.out.println("count: " + count);
+    }
+    public void namedQueries() {
+        em.createNamedQuery("Member.findByUsername", Member.class)
+                .setParameter("username", "user7")
+                .getResultList()
+                .forEach(System.out::println);
+    }
+
     public void collectionEquation() {
         TypedQuery<Team> query = em.createQuery("select t from Team t" +
                 " where :memberParam member of t.members", Team.class);
@@ -27,6 +43,7 @@ public class JpqlRepository {
 
         query.getResultList().forEach(System.out::println);
     }
+
     public void subQueryFunctions() {
         em.createQuery("select m from Member m" +
                 " where exists (select t from m.team t where t.name = 'team10')", Member.class)

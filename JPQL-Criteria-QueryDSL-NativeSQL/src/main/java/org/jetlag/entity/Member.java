@@ -8,6 +8,14 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@NamedQueries({
+        @NamedQuery(
+                name = "Member.findByUsername",
+                query = "select m from Member m where m.username = :username"),
+        @NamedQuery(
+                name = "Member.count",
+                query = "select count(m) from Member m")
+})
 @ToString(exclude = {"team", "orders"})
 @Setter
 @Getter

@@ -24,19 +24,10 @@ public class Application {
 
         try {
             tx.begin();
+//            init(20);
 //            createQueryNativeSql();
 //            createQueryQuerydsl();
-//            init(20);
-
-//            jpqlRepository.innerJoin();
-//            jpqlRepository.fetchJoin();
-//            jpqlRepository.collectionJoin();
-//            jpqlRepository.collectionFetchJoin();
-//            jpqlRepository.pathExpression();
-//            jpqlRepository.collectionPathExpression();
-//            jpqlRepository.subQuries();
-//            jpqlRepository.subQueryFunctions();
-            jpqlRepository.collectionEquation();
+            jpqlRepository.namedQueriesFromXml();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
