@@ -2,6 +2,7 @@ package org.jetlag.repository;
 
 import com.querydsl.core.QueryModifiers;
 import com.querydsl.core.QueryResults;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.jetlag.entity.*;
 
@@ -13,6 +14,34 @@ public class QuerydslRepository {
 
     public QuerydslRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void subQueryForMany() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+        QProduct productSub = new QProduct("productSub");
+
+        query.from(product)
+                .where(product.in(
+                        JPAExpressions.selectFrom(productSub)
+                                .where(product.name.eq(productSub.name))
+                ))
+                .fetch()
+                .forEach(System.out::println);
+    }
+    public void subQueryForOne() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+        QProduct productSub = new QProduct("productSub");
+
+        query.from(product)
+                .where(product.price.eq(
+                        JPAExpressions.selectDistinct(productSub.price.max())
+                                .from(productSub)
+                ))
+                .from(product)
+                .fetch()
+                .forEach(System.out::println);
     }
 
     public void thetaJoin() {
