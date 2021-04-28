@@ -1,5 +1,6 @@
 package org.jetlag.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryModifiers;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
@@ -9,16 +10,38 @@ import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.jetlag.dto.ProductDTO;
+import org.jetlag.dto.ProductSearchDTO;
 import org.jetlag.entity.*;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 public class QuerydslRepository {
     private final EntityManager em;
 
     public QuerydslRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void dynamicQuery() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        ProductSearchDTO param = new ProductSearchDTO();
+        param.setName("1");
+        param.setPrice(100000);
+
+        BooleanBuilder builder = new BooleanBuilder();
+        if (Optional.ofNullable(param.getName()).isPresent()) {
+            builder.and(product.name.contains(param.getName()));
+        }
+        if (param.getPrice() != null) {
+            builder.and(product.price.gt(param.getPrice()));
+        }
+        List<Product> result = query.from(product)
+                .where(builder).fetch();
+        result.forEach(System.out::println);
     }
 
     public void deleteBatchQuery() {
