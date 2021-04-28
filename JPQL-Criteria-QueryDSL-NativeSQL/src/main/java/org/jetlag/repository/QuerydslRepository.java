@@ -15,6 +15,42 @@ public class QuerydslRepository {
         this.em = em;
     }
 
+    public void thetaJoin() {
+        JPAQuery<Orders> query = new JPAQuery<>(em);
+        QOrders orders = QOrders.orders;
+        QMember member = QMember.member;
+
+        query.from(orders, member)
+                .where(orders.member.eq(member))
+                .fetch()
+                .forEach(o -> System.out.println(o.getId() + " " + o.getMember().getUsername()));
+    }
+    public void fetchJoin() {
+        JPAQuery<Orders> query = new JPAQuery<>(em);
+        QOrders orders = QOrders.orders;
+        QProduct product = QProduct.product;
+        QMember member = QMember.member;
+
+        query.from(orders)
+                .innerJoin(orders.member, member).fetchJoin()
+                .leftJoin(orders.product, product).fetchJoin()
+                .fetch()
+                .forEach(o -> System.out.println(o.getId()
+                        + " " + o.getProduct().getName()
+                        + " " + o.getMember().getUsername()));
+    }
+
+    public void joinOn() {
+        JPAQuery<Orders> query = new JPAQuery<>(em);
+        QOrders orders = QOrders.orders;
+        QProduct product = QProduct.product;
+
+        query.from(orders)
+                .leftJoin(orders.product, product)
+                .on(product.stockAmount.gt(10))
+                .fetch()
+                .forEach(System.out::println);
+    }
     public void basicJoin() {
         JPAQuery<Orders> query = new JPAQuery<>(em);
         QOrders orders = QOrders.orders;
@@ -26,6 +62,8 @@ public class QuerydslRepository {
                 .leftJoin(orders.member, member)
                 .fetch()
                 .forEach(o -> System.out.println(o.getId() + " " + o.toString()));
+        // Lazy fetch
+        // .forEach(o -> System.out.println(o.getId() + " " + o.getMember() + " " + o.getProduct()));
     }
 
     public void pagingWithFetchResults() {

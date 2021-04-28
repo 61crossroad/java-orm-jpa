@@ -31,9 +31,7 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-//            criteriaRepository.sorting();
-//            criteriaRepository.join();
-            querydslRepository.basicJoin();
+            querydslRepository.thetaJoin();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
