@@ -31,7 +31,7 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-            querydslRepository.dynamicQuery();
+            querydslRepository.methodDelegate();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package org.jetlag.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
+import org.jetlag.repository.expression.*;
 
 import com.querydsl.core.types.dsl.*;
 
@@ -43,6 +44,10 @@ public class QProduct extends EntityPathBase<Product> {
 
     public QProduct(PathMetadata metadata) {
         super(Product.class, metadata);
+    }
+
+    public BooleanExpression isExpensive(Integer price) {
+        return ProductExpression.isExpensive(this, price);
     }
 
 }

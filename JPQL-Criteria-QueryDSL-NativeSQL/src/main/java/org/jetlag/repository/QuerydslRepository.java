@@ -24,6 +24,14 @@ public class QuerydslRepository {
         this.em = em;
     }
 
+    public void methodDelegate() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        query.from(product).where(product.isExpensive(150000)).fetch()
+                .forEach(System.out::println);
+    }
+
     public void dynamicQuery() {
         JPAQuery<Product> query = new JPAQuery<>(em);
         QProduct product = QProduct.product;
