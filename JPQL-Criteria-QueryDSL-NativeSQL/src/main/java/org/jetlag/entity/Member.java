@@ -8,6 +8,10 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@SqlResultSetMapping(name = "memberWithOrderCount",
+        entities = {@EntityResult(entityClass = Member.class)},
+        columns = {@ColumnResult(name = "order_count")}
+)
 @NamedQueries({
         @NamedQuery(
                 name = "Member.findByUsername",
