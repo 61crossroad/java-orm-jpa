@@ -2,8 +2,11 @@ package org.jetlag.repository;
 
 import com.querydsl.core.QueryModifiers;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
+import org.jetlag.dto.ProductDTO;
 import org.jetlag.entity.*;
 
 import javax.persistence.EntityManager;
@@ -14,6 +17,58 @@ public class QuerydslRepository {
 
     public QuerydslRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void projectionsToConstructor() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        List<ProductDTO> result = query.select(Projections.constructor(
+                ProductDTO.class,
+                product.name,
+                product.price))
+                .from(product).fetch();
+
+        result.forEach(System.out::println);
+    }
+    public void projectionsToFields() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        List<ProductDTO> result = query.select(Projections.fields(
+                ProductDTO.class,
+                product.name.as("username"),
+                product.price))
+                .from(product).fetch();
+
+        result.forEach(System.out::println);
+    }
+    public void projectionsToDto() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        List<ProductDTO> result = query.select(Projections.bean(
+                ProductDTO.class,
+                product.name.as("username"),
+                product.price)).from(product).fetch();
+
+        result.forEach(System.out::println);
+    }
+
+    public void projectTuple() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        List<Tuple> result = query.select(product.name, product.price).from(product).fetch();
+        result.forEach(System.out::println);
+    }
+
+    public void projectField() {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+
+        List<String> result = query.select(product.name).from(product).fetch();
+        result.forEach(System.out::println);
     }
 
     public void subQueryForMany() {
