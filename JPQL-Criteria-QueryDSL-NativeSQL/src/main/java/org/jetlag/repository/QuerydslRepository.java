@@ -5,7 +5,9 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPADeleteClause;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.jetlag.dto.ProductDTO;
 import org.jetlag.entity.*;
 
@@ -17,6 +19,29 @@ public class QuerydslRepository {
 
     public QuerydslRepository(EntityManager em) {
         this.em = em;
+    }
+
+    public void deleteBatchQuery() {
+        QProduct product = QProduct.product;
+
+        JPADeleteClause deleteClause = new JPADeleteClause(em, product);
+        Long count = deleteClause.where(product.name.eq("product3")).execute();
+        System.out.println("delete result: " + count);
+    }
+
+    public void updateBatchQuery() {
+        QProduct product = QProduct.product;
+
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        System.out.println(query.from(product).where(product.name.eq("product2")).fetchOne());
+
+        JPAUpdateClause updateClause = new JPAUpdateClause(em, product);
+        Long count = updateClause.where(product.name.eq("product2"))
+                .set(product.price, product.price.add(100))
+                .execute();
+
+        // update not applied...
+        System.out.println(query.from(product).where(product.name.eq("product2")).fetchOne());
     }
 
     public void projectionsToConstructor() {

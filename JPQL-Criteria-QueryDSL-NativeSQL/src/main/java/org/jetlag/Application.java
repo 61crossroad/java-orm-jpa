@@ -31,7 +31,8 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-            querydslRepository.projectionsToConstructor();
+//            querydslRepository.updateBatchQuery();
+            querydslRepository.deleteBatchQuery();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
