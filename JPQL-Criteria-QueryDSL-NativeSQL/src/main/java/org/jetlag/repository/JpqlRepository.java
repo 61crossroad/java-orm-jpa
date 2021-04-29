@@ -18,6 +18,22 @@ public class JpqlRepository {
         this.em = em;
     }
 
+    // FIXME: Mapping error... column city..
+    public void nativeQueryMapping() {
+        Query q = em.createNativeQuery(
+                " SELECT o.id AS order_id" +
+                        ", o.order_amount AS order_amount" +
+                        ", o.product_id AS product_id" +
+                        ", p.name AS product_name" +
+                        " FROM orders o, product p" +
+                        " WHERE (o.order_amount > 13) AND" +
+                        " (o.product_id = p.id)", "OrderResults");
+
+        q.getResultList().forEach(row -> {
+            System.out.println(row.getClass());
+        });
+    }
+
     public void namedQueriesFromXml() {
         em.createNamedQuery("Member.findByUsernameXml", Member.class)
                 .setParameter("username", "user4")

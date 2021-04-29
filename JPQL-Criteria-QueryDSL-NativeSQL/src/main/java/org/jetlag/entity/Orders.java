@@ -7,6 +7,19 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Collection;
 
+// FIXME: Mapping error, city...
+@SqlResultSetMapping(name = "OrderResults",
+        entities = {
+                @EntityResult(
+                        entityClass = org.jetlag.entity.Orders.class,
+                        fields = {
+                                @FieldResult(name = "id", column="order_id"),
+                                @FieldResult(name = "orderAmount", column = "order_amount")
+                        })},
+        columns = {
+                @ColumnResult(name = "product_id"),
+                @ColumnResult(name = "product_name")})
+
 @ToString(exclude = {"member", "product"})
 @Setter
 @Getter

@@ -12,6 +12,7 @@ import java.util.List;
         entities = {@EntityResult(entityClass = Member.class)},
         columns = {@ColumnResult(name = "order_count")}
 )
+
 @NamedQueries({
         @NamedQuery(
                 name = "Member.findByUsername",
@@ -20,6 +21,7 @@ import java.util.List;
                 name = "Member.count",
                 query = "select count(m) from Member m")
 })
+
 @ToString(exclude = {"team", "orders"})
 @Setter
 @Getter

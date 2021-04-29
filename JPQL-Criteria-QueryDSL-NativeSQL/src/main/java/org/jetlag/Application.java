@@ -29,7 +29,8 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-            nativeSqlRepository.resultMapping();
+//            nativeSqlRepository.resultMapping();
+            jpqlRepository.nativeQueryMapping();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
