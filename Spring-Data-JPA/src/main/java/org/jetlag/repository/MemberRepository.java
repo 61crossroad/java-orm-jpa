@@ -7,8 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.QueryHint;
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -18,6 +20,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByName(String name, Sort sort);
     // List<Member> findByName(String name, Pageable pageable);
     Page<Member> findByName(String name, Pageable pageable);
+    
+    /* TODO: QueryHints!!!
+    @QueryHints(value = {
+            @QueryHint(name = "org.hibernate.readOnly", value = "true")},
+            forCounting = true)
+    Page<Member> findByName(String name, Pageable pageable);
+     */
 
     Page<Member> findByNameStartingWith(String name, Pageable pageable);
 
