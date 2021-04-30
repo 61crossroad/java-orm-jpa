@@ -8,6 +8,11 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@NamedQuery(
+        name = "Member.findByName",
+        query = "select m from Member m where m.name = :name"
+)
+@ToString
 @Setter
 @Getter
 @Entity
@@ -15,8 +20,9 @@ public class Member extends {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String username;
+    private String email;
+
+    private String name;
 
     private int age;
 
@@ -35,8 +41,8 @@ public class Member extends {
 
     public Member() {}
 
-    public Member(String username, int age) {
-        this.username = username;
-        this.age = age;
+    public Member(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 }
