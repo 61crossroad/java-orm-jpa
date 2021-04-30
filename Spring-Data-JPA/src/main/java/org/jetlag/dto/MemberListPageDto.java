@@ -3,7 +3,7 @@ package org.jetlag.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.jetlag.entity.Member;
+import org.jetlag.domain.entity.Member;
 
 import java.util.List;
 

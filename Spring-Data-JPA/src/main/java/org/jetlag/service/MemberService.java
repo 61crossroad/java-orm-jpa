@@ -2,8 +2,8 @@ package org.jetlag.service;
 
 import lombok.RequiredArgsConstructor;
 import org.jetlag.dto.MemberListPageDto;
-import org.jetlag.entity.Member;
-import org.jetlag.repository.MemberRepository;
+import org.jetlag.domain.entity.Member;
+import org.jetlag.domain.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

@@ -1,7 +1,7 @@
-package org.jetlag.repository;
+package org.jetlag.domain.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.jetlag.entity.Member;
+import org.jetlag.domain.entity.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

@@ -1,13 +1,11 @@
-package org.jetlag.entity;
+package org.jetlag.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @ToString
 @Setter
@@ -22,4 +20,7 @@ public class Product {
     private Integer price;
 
     private Integer stockAmount;
+
+    @OneToMany(mappedBy = "product")
+    private List<Orders> orders;
 }
