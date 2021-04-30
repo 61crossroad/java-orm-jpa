@@ -12,8 +12,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findByName(@Param("name") String name);
 
-    @Query("select m from Member m where m.name = ?1")
-    Member findByNameQuery(String name);
+    @Query("select m from Member m where m.name = :name")
+    Member findByNameQuery(@Param("name") String name);
 
     @Query(value = "SELECT * FROM member WHERE name = 0?", nativeQuery = true)
     Member findByNameNative(String name);
