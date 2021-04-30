@@ -2,6 +2,7 @@ package org.jetlag.repository;
 
 import org.jetlag.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -17,4 +18,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query(value = "SELECT * FROM member WHERE name = 0?", nativeQuery = true)
     Member findByNameNative(String name);
+
+    // @Modifying(clearAutomatically = true)
+    @Modifying
+    @Query("update Product p set p.price = p.price * 1.1 where p.stockAmount < :stockAmount")
+    int bulkPriceUp(@Param("stockAmount") Integer stockAmount);
 }
