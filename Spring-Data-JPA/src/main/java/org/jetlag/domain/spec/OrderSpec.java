@@ -17,7 +17,7 @@ public class OrderSpec {
                     CriteriaQuery<?> query,
                     CriteriaBuilder criteriaBuilder) {
 
-                if (!StringUtils.hasLength(memberName)) {
+                if (!StringUtils.hasText(memberName)) {
                     return null;
                 }
 
