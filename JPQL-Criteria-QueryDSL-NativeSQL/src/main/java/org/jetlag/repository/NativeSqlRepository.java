@@ -13,6 +13,26 @@ public class NativeSqlRepository {
 
     public NativeSqlRepository(EntityManager em) { this.em = em; }
 
+    // FIXME: Mapping error... column city2_1_0
+    public void JpaStandardMapping() {
+        Query q = em.createNativeQuery(
+                "SELECT o.id AS order_id" +
+                        ", o.order_amount AS order_amount" +
+                        ", o.product_id AS product_id" +
+                        ", p.name AS product_name" +
+                        " FROM Orders o, Product p" +
+                        " WHERE (order_amount > 9) AND" +
+                        " (product_id = p.id)", "OrderResults");
+
+        List<Object[]> resultList = q.getResultList();
+        resultList.forEach(row -> {
+            Orders orders = (Orders) row[0];
+            Long productId = (Long) row[1];
+            String productName = (String) row[2];
+            System.out.println(orders + " [" + productId + ", " + productName + "]");
+        });
+    }
+
     public void resultMapping() {
         String sql = "SELECT i.id, age, name, team_id, i.order_count"
                 + " FROM member m"

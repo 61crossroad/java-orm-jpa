@@ -7,14 +7,15 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.Collection;
 
-// FIXME: Mapping error, city...
+// FIXME: Mapping error... column city2_1_0
 @SqlResultSetMapping(name = "OrderResults",
         entities = {
                 @EntityResult(
                         entityClass = org.jetlag.entity.Orders.class,
                         fields = {
                                 @FieldResult(name = "id", column="order_id"),
-                                @FieldResult(name = "orderAmount", column = "order_amount")
+                                @FieldResult(name = "orderAmount", column = "order_amount"),
+                                // @FieldResult(name = "product.id", column = "product_id")
                         })},
         columns = {
                 @ColumnResult(name = "product_id"),
