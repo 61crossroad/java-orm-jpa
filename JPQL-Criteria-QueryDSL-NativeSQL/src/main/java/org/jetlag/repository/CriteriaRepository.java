@@ -19,6 +19,34 @@ public class CriteriaRepository {
          this.em = em;
      }
 
+    // FIXME: exception occurred
+     public void nativeSqlFunction() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+         Root<Member> m = cq.from(Member.class);
+
+         Expression<Long> function = cb.function("SUM", Long.class, m.get("age"));
+         Selection<Long> selection = function.as(Long.class);
+         // cq.select(selection);
+         cq.select(function.alias("sum")).from(Member.class);
+         Long sum = em.createQuery(cq).getSingleResult();
+     }
+
+     public void setParams() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+         Root<Member> m = cq.from(Member.class);
+
+         cq.select(m)
+                 .where(cb.equal(m.get("username"), cb.parameter(String.class, "usernameParam")));
+
+         List<Member> resultList = em.createQuery(cq)
+                 .setParameter("usernameParam", "user9")
+                 .getResultList();
+
+         resultList.forEach(System.out::println);
+     }
+
      public void caseClause() {
          CriteriaBuilder cb = em.getCriteriaBuilder();
          CriteriaQuery<Member> cq = cb.createQuery(Member.class);

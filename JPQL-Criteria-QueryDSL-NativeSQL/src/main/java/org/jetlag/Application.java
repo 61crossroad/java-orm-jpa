@@ -31,7 +31,7 @@ public class Application {
 //            init(20);
 //            nativeSqlRepository.resultMapping();
 //            jpqlRepository.nativeQueryMapping();
-            criteriaRepository.caseClause();
+            criteriaRepository.nativeSqlFunction();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
