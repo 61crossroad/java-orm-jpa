@@ -19,6 +19,21 @@ public class CriteriaRepository {
          this.em = em;
      }
 
+     public void caseClause() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+         Root<Member> m = cq.from(Member.class);
+
+         cq.multiselect(
+                 m.get("username"),
+                 cb.selectCase()
+                         .when(cb.ge(m.<Integer>get("age"), 30), 600)
+                         .when(cb.le(m.<Integer>get("age"), 20), 500)
+                         .otherwise(1000));
+
+         em.createQuery(cq).getResultList().forEach(System.out::println);
+     }
+
      public void inClause() {
          CriteriaBuilder cb = em.getCriteriaBuilder();
          CriteriaQuery<Member> cq = cb.createQuery(Member.class);
