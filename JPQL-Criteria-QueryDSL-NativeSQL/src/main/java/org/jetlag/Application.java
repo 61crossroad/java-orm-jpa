@@ -30,7 +30,8 @@ public class Application {
             tx.begin();
 //            init(20);
 //            nativeSqlRepository.resultMapping();
-            jpqlRepository.nativeQueryMapping();
+//            jpqlRepository.nativeQueryMapping();
+            criteriaRepository.inClause();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

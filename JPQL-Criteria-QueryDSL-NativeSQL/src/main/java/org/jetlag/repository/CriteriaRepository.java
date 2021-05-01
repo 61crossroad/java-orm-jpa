@@ -7,7 +7,6 @@ import org.jetlag.entity.Product;
 import org.jetlag.entity.Team;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -18,6 +17,16 @@ public class CriteriaRepository {
 
      public CriteriaRepository(EntityManager em) {
          this.em = em;
+     }
+
+     public void inClause() {
+         CriteriaBuilder cb = em.getCriteriaBuilder();
+         CriteriaQuery<Member> cq = cb.createQuery(Member.class);
+         Root<Member> m = cq.from(Member.class);
+
+         cq.select(m).where(cb.in(m.get("username")).value("user6").value("user7"));
+         em.createQuery(cq).getResultList()
+                 .forEach(System.out::println);
      }
 
      public void relatedSubQuery() {
