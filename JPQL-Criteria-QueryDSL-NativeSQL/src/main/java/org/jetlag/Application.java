@@ -30,9 +30,9 @@ public class Application {
             tx.begin();
 //            init(20);
 //            nativeSqlRepository.resultMapping();
-            nativeSqlRepository.JpaStandardMapping();
+//            nativeSqlRepository.JpaStandardMapping();
 //            jpqlRepository.nativeQueryMapping();
-//            criteriaRepository.nativeSqlFunction();
+            criteriaRepository.nativeSqlFunction();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();

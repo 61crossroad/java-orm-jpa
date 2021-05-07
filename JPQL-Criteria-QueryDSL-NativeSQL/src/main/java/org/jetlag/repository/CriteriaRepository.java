@@ -27,9 +27,10 @@ public class CriteriaRepository {
 
          Expression<Long> function = cb.function("SUM", Long.class, m.get("age"));
          Selection<Long> selection = function.as(Long.class);
-         // cq.select(selection);
-         cq.select(function.alias("sum")).from(Member.class);
+         cq.select(selection);
          Long sum = em.createQuery(cq).getSingleResult();
+//         cq.select(function.alias("sum")).from(Member.class);
+//         List<Long> sum = em.createQuery(cq).getResultList();
      }
 
      public void setParams() {
