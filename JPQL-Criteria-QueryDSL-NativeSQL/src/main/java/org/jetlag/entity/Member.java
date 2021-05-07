@@ -8,6 +8,30 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@SqlResultSetMapping(
+        name = "memberWithOrderCount",
+        entities = {@EntityResult(entityClass = Member.class)},
+        columns = {@ColumnResult(name = "order_count")}
+)
+@NamedNativeQuery(
+        name = "Member.memberWithOrderCount",
+        query = "SELECT m.id, age, name, team_id, i.order_count" +
+                " FROM member m" +
+                "LEFT JOIN" +
+                "   (SELECT im.id, COUNT(*) AS order_count" +
+                "   FROM orders o, member im" +
+                "   WHERE o.member_id = im.id) i" +
+                " ON m.id = i.id",
+        resultSetMapping = "memberWithOrderCount"
+)
+
+@NamedNativeQuery(
+        name = "Member.memberSQL",
+        query = "SELECT id, age, name, team_id " +
+                "FROM member WHERE age > ?",
+        resultClass = Member.class
+)
+
 @SqlResultSetMapping(name = "memberWithOrderCount",
         entities = {@EntityResult(entityClass = Member.class)},
         columns = {@ColumnResult(name = "order_count")}

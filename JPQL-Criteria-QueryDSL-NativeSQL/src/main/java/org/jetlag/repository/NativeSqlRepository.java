@@ -5,6 +5,7 @@ import org.jetlag.entity.Orders;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -12,6 +13,35 @@ public class NativeSqlRepository {
     private final EntityManager em;
 
     public NativeSqlRepository(EntityManager em) { this.em = em; }
+
+    // FIXME: createNamedQuery cannot get sql-result-set-mapping
+    public void namedNativeQueryFromXml() {
+        Query query = em.createNamedQuery("Member.memberWithOrderCountXml");
+        List<Object[]> resultList = query.getResultList();
+        resultList.forEach(row -> {
+            Member member = (Member) row[0];
+            BigInteger order_count = (BigInteger) row[1];
+            System.out.println(member + " " + order_count);
+        });
+    }
+
+    // FIXME: SqlResultSetMapping needs every field
+    public void namedNativeQueryWithResultSetMapping() {
+        List<Object[]> resultList =
+                em.createNamedQuery("Member.memberWithOrderCount")
+                .getResultList();
+    }
+
+    public void namedNativeQuery() {
+        TypedQuery<Member> nativeQuery =
+                em.createNamedQuery("Member.memberSQL", Member.class)
+                .setParameter(1, 20);
+        nativeQuery.getResultList()
+                .forEach(row -> System.out.println(row.getId() +
+                        " " + row.getUsername() +
+                        " " + row.getAge() +
+                        " " + row.getTeam().getId()));
+    }
 
     // FIXME: Mapping error... column city2_1_0
     public void JpaStandardMapping() {

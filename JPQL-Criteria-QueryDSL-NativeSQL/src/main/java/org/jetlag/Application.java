@@ -31,7 +31,10 @@ public class Application {
 //            init(20);
 //            jpqlRepository.nativeQueryMapping();
 //            criteriaRepository.nativeSqlFunction();
-            nativeSqlRepository.JpaStandardMapping();
+//            nativeSqlRepository.JpaStandardMapping();
+//            nativeSqlRepository.namedNativeQuery();
+//            nativeSqlRepository.namedNativeQueryWithResultSetMapping();
+            nativeSqlRepository.namedNativeQueryFromXml();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
