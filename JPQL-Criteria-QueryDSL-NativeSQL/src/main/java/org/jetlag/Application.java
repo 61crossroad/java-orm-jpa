@@ -25,6 +25,7 @@ public class Application {
         DynamicQueryRepository dynamicQueryRepository = new DynamicQueryRepository(em);
         QuerydslRepository querydslRepository = new QuerydslRepository(em);
         NativeSqlRepository nativeSqlRepository = new NativeSqlRepository(em);
+        BulkExecutionRepository bulkExecutionRepository = new BulkExecutionRepository(em);
 
         try {
             tx.begin();
@@ -34,7 +35,8 @@ public class Application {
 //            nativeSqlRepository.JpaStandardMapping();
 //            nativeSqlRepository.namedNativeQuery();
 //            nativeSqlRepository.namedNativeQueryWithResultSetMapping();
-            nativeSqlRepository.namedNativeQueryFromXml();
+//            nativeSqlRepository.namedNativeQueryFromXml();
+            bulkExecutionRepository.bulkUpdate();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
