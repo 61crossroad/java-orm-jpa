@@ -29,10 +29,9 @@ public class Application {
         try {
             tx.begin();
 //            init(20);
-//            nativeSqlRepository.resultMapping();
-//            nativeSqlRepository.JpaStandardMapping();
 //            jpqlRepository.nativeQueryMapping();
-            criteriaRepository.nativeSqlFunction();
+//            criteriaRepository.nativeSqlFunction();
+            nativeSqlRepository.JpaStandardMapping();
             tx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,10 +105,10 @@ public class Application {
             order.setMember(members.get((int) (Math.random() * members.size())));
             order.setProduct(products.get((int) (Math.random() * products.size())));
             order.setOrderAmount((i + 1) * 2);
-            order.setAddress(new Address(
+            /* order.setAddress(new Address(
                     "city" + (i + 1),
                     "street" + (i * 10),
-                    "" + i + (i + 1) + (i + 3)));
+                    "" + i + (i + 1) + (i + 3))); */
             em.persist(order);
         }
     }

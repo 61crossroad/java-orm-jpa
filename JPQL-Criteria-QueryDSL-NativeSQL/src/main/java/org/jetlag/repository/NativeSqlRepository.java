@@ -59,7 +59,7 @@ public class NativeSqlRepository {
         Query nativeQuery = em.createNativeQuery(sql).setParameter(1, 10);
 
         List<Object[]> resultList = nativeQuery.getResultList();
-        resultList.forEach(o -> System.out.println(o[0] + " " + o[1] + ", " + o[2]));
+        resultList.forEach(row -> System.out.println(row[0] + " " + row[1] + ", " + row[2]));
     }
 
     public void selectEntity() {

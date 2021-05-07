@@ -15,7 +15,7 @@ import java.util.Collection;
                         fields = {
                                 @FieldResult(name = "id", column="order_id"),
                                 @FieldResult(name = "orderAmount", column = "order_amount"),
-                                // @FieldResult(name = "product.id", column = "product_id")
+                                @FieldResult(name = "product", column = "product_id")
                         })},
         columns = {
                 @ColumnResult(name = "product_id"),
