@@ -14,6 +14,13 @@ public class NativeSqlRepository {
 
     public NativeSqlRepository(EntityManager em) { this.em = em; }
 
+    public void paging() {
+        String sql = "SELECT id, age, name, team_id FROM member";
+        Query nativeQuery = em.createNativeQuery(sql, Member.class)
+                .setFirstResult(10)
+                .setMaxResults(20);
+    }
+
     // FIXME: createNamedQuery cannot get sql-result-set-mapping
     public void namedNativeQueryFromXml() {
         Query query = em.createNamedQuery("Member.memberWithOrderCountXml");
